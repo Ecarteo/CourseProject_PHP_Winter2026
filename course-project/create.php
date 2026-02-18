@@ -2,6 +2,43 @@
 // Connect to the database
 include "db.php";
 
+// Variables declaration
+$errors = [];
+$success = "";
+
+// Check if form was submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    // Server-side validation: check that no field is empty
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
+    $current_position = trim($_POST['current_position']);
+    $skills = trim($_POST['skills']);
+    $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
+    $bio = trim($_POST['bio']);
+
+    // Possible errors
+    if (empty($first_name)) $errors[] = "First name is required.";
+    if (empty($last_name)) $errors[] = "Last name is required.";
+    if (empty($current_position)) $errors[] = "Current position is required.";
+    if (empty($skills)) $errors[] = "Skills are required.";
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "A valid email is required.";
+    if (empty($phone)) $errors[] = "Phone number is required.";
+    if (empty($bio)) $errors[] = "Bio is required.";
+
+    // If no errors, insert into database
+    if (empty($errors)) {
+        $query = "INSERT INTO resumes (first_name, last_name, current_position, skills, email, phone, bio) 
+                  VALUES ('$first_name', '$last_name', '$current_position', '$skills', '$email', '$phone', '$bio')";
+        
+        if (mysqli_query($conn, $query)) {
+            $success = "Resume created successfully!";
+        } else {
+            $errors[] = "Something went wrong. Please try again.";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +54,7 @@ include "db.php";
     
     <!-- Website structure -->
     <div class="container mt-5">
-        
+
         <!-- Resume Form -->
         <form method="POST" action="create.php">
             <div class="mb-3">
