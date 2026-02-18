@@ -54,6 +54,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     <!-- Website structure -->
     <div class="container mt-5">
+        <h1 class="mb-4">Edit Resume</h1>
+        <a href="index.php" class="btn btn-secondary mb-3">Back to List</a>
+
+        <!-- Show errors if any -->
+        <?php if (!empty($errors)) { ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach($errors as $error) { ?>
+                        <li><?php echo $error; ?></li>
+                    <?php } ?>
+                </ul>
+            </div>
+        <?php } ?>
+
+        <!-- Show success message -->
+        <?php if ($success) { ?>
+            <div class="alert alert-success"><?php echo $success; ?></div>
+        <?php } ?>
 
         <!-- Resume Form -->
         <form method="POST" action="create.php">
