@@ -18,7 +18,7 @@ $result = mysqli_query($conn, $query);
 </head>
 <body>
 
-    <!-- Website structure  -->
+    <!-- Website structure -->
     <!-- -Classes' only purpose is to use Bootstrap features. -->
     <div class="container mt-5">
         <h1 class="mb-4">Resume Builder</h1>
