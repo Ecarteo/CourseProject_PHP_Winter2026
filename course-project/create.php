@@ -8,6 +8,15 @@ $success = "";
 
 // Check if form was submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Server-side reCAPTCHA validation
+    $recaptcha_secret = "6LeeeXAsAAAAALFtCDQ_3BgYPcCy4P19aminhs_i";
+    $recaptcha_response = $_POST['g-recaptcha-response'];
+    $verify = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=$recaptcha_secret&response=$recaptcha_response");
+    $captcha_success = json_decode($verify);
+
+    if (!$captcha_success->success) {
+        $errors[] = "Please complete the reCAPTCHA.";
+    }
 
     // Server-side validation: check that no field is empty
     // Added mysqli_real_escape_stringg since adding apostrophes would break the form.
@@ -75,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php } ?>
 
         <!-- Resume Form -->
-        <!-- Some input elements may be re-added after form submission. -->
+        <!-- Elements will be re-added after form submission using isset. -->
         <form method="POST" action="create.php">
             <div class="mb-3">
                 <label for="first_name" class="form-label">First Name</label>
@@ -87,24 +96,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="mb-3">
                 <label for="current_position" class="form-label">Current Position</label>
-                <input type="text" class="form-control" id="current_position" name="current_position" required>
+                <input type="text" class="form-control" id="current_position" name="current_position" value="<?php echo isset($_POST['current_position']) ? $_POST['current_position'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="skills" class="form-label">Skills (separate with commas)</label>
-                <input type="text" class="form-control" id="skills" name="skills" required>
+                <input type="text" class="form-control" id="skills" name="skills" value="<?php echo isset($_POST['skills']) ? $_POST['skills'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone" required>
+                <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bio" class="form-label">Short Bio</label>
-                <textarea class="form-control" id="bio" name="bio" rows="4" required></textarea>
+                <textarea class="form-control" id="bio" name="bio" rows="4" required><?php echo isset($_POST['bio']) ? $_POST['bio'] : ''; ?></textarea>
             </div>
+
+            <!-- Google reCAPTCHA -->
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            <div class="mb-3">
+                <div class="g-recaptcha" data-sitekey="6LeeeXAsAAAAAI56x1t8OGGppJGVFmaQL-rlBQgY"></div>
+            </div>
+            <!-- Submitting button -->
             <button type="submit" class="btn btn-primary">Save Resume</button>
         </form>
     </div> 
