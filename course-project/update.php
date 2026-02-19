@@ -6,7 +6,58 @@ include "db.php";
 $errors = [];
 $success = "";
 
-// Program logic to add later...
+// Get the resume ID from the URL
+$id = $_GET['id'];
+
+// Fetch the existing resume data from the database
+$query = "SELECT * FROM resumes WHERE id = $id";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
+
+// Check if form was submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    // Server-side validation: check that no field is empty
+    $first_name = mysqli_real_escape_string($conn, trim($_POST['first_name']));
+    $last_name = mysqli_real_escape_string($conn, trim($_POST['last_name']));
+    $current_position = mysqli_real_escape_string($conn, trim($_POST['current_position']));
+    $skills = mysqli_real_escape_string($conn, trim($_POST['skills']));
+    $email = mysqli_real_escape_string($conn, trim($_POST['email']));
+    $phone = mysqli_real_escape_string($conn, trim($_POST['phone']));
+    $bio = mysqli_real_escape_string($conn, trim($_POST['bio']));
+
+    // Possible errors
+    if (empty($first_name)) $errors[] = "First name is required.";
+    if (empty($last_name)) $errors[] = "Last name is required.";
+    if (empty($current_position)) $errors[] = "Current position is required.";
+    if (empty($skills)) $errors[] = "Skills are required.";
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) $errors[] = "A valid email is required.";
+    if (empty($phone)) $errors[] = "Phone number is required.";
+    if (empty($bio)) $errors[] = "Bio is required.";
+
+    // If no errors, update the database
+    if (empty($errors)) {
+        $query = "UPDATE resumes SET
+            first_name='$first_name', 
+            last_name='$last_name', 
+            current_position='$current_position', 
+            skills='$skills', 
+            email='$email', 
+            phone='$phone', 
+            bio='$bio' 
+            WHERE id=$id";
+
+        if (mysqli_query($conn, $query)) {
+            $success = "Resume updated successfully!";
+            // Refresh the row data after update
+            $row = ['first_name' => $first_name, 'last_name' => $last_name,
+                    'current_position' => $current_position, 'skills' => $skills,
+                    'email' => $email, 'phone' => $phone, 'bio' => $bio];
+        } else {
+            $errors[] = "Something went wrong. Please try again.";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
