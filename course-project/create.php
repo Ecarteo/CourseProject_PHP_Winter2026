@@ -74,14 +74,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php } ?>
 
         <!-- Resume Form -->
+        <!-- Some input elements may be re-added after form submission. -->
         <form method="POST" action="create.php">
             <div class="mb-3">
                 <label for="first_name" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo isset($_POST['first_name']) ? $_POST['first_name'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo isset($_POST['last_name']) ? $_POST['last_name'] : ''; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="current_position" class="form-label">Current Position</label>
