@@ -2,14 +2,23 @@
 // Connect to the database
 include "db.php";
 
-// Delete resume from the database
-$query = "DELETE FROM resumes WHERE id = $id";
+// Check if ID was provided in the URL
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    
+    $id = $_GET['id'];
 
-if (mysqli_query($conn, $query)) {
-    // Redirect back to the index after deleting resume
-    header("Location: index.php");
-    exit();
+    // Delete the resume from the database
+    $query = "DELETE FROM resumes WHERE id = $id";
+
+    if (mysqli_query($conn, $query)) {
+        // Redirect back to index after deletion
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "Something went wrong. Please try again.";
+    }
+
 } else {
-    echo "Something went wrong. Please try again.";
+    echo "No resume ID provided.";
 }
 ?>
