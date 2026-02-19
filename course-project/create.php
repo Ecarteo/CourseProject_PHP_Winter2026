@@ -10,13 +10,14 @@ $success = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Server-side validation: check that no field is empty
-    $first_name = trim($_POST['first_name']);
-    $last_name = trim($_POST['last_name']);
-    $current_position = trim($_POST['current_position']);
-    $skills = trim($_POST['skills']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $bio = trim($_POST['bio']);
+    // Added mysqli_real_escape_stringg since adding apostrophes would break the form.
+    $first_name = mysqli_real_escape_string($conn, trim($_POST['first_name']));
+    $last_name = mysqli_real_escape_string($conn, trim($_POST['last_name']));
+    $current_position = mysqli_real_escape_string($conn, trim($_POST['current_position']));
+    $skills = mysqli_real_escape_string($conn, trim($_POST['skills']));
+    $email = mysqli_real_escape_string($conn, trim($_POST['email']));
+    $phone = mysqli_real_escape_string($conn, trim($_POST['phone']));
+    $bio = mysqli_real_escape_string($conn, trim($_POST['bio']));
 
     // Possible errors
     if (empty($first_name)) $errors[] = "First name is required.";
