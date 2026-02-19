@@ -96,15 +96,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="POST" action="update.php?id=<?php echo $id; ?>">
             <div class="mb-3">
                 <label for="first_name" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $row['first_name']; ?>" required>
+                <input type="text" class="form-control" id="first_name" name="first_name" maxlength="50" value="<?php echo $row['first_name']; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="last_name" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $row['last_name']; ?>" required>
+                <input type="text" class="form-control" id="last_name" name="last_name" maxlength="50" value="<?php echo $row['last_name']; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="current_position" class="form-label">Current Position</label>
-                <input type="text" class="form-control" id="current_position" name="current_position" value="<?php echo $row['current_position']; ?>" required>
+                <input type="text" class="form-control" id="current_position" name="current_position" maxlength="100" value="<?php echo $row['current_position']; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="skills" class="form-label">Skills (separate with commas)</label>
@@ -116,11 +116,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $row['phone']; ?>" required>
+                <input type="tel" class="form-control" id="phone" name="phone" minlength="10" maxlength="15" value="<?php echo $row['phone']; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="bio" class="form-label">Short Bio</label>
-                <textarea class="form-control" id="bio" name="bio" rows="4" required><?php echo $row['bio']; ?></textarea>
+                <textarea class="form-control" id="bio" name="bio" rows="4" minlength="10" required><?php echo $row['bio']; ?></textarea>
             </div>
 
             <!-- Updating button -->
