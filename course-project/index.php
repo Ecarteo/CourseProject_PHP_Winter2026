@@ -1,10 +1,10 @@
 <?php
-// Connect to the database
+session_start();
 include "db.php";
 
-// Get all queries from the database
-$query = "SELECT *  FROM resumes";
-$result = mysqli_query($conn, $query);
+// Fetch all resumes
+$stmt    = $pdo->query("SELECT * FROM resumes");
+$resumes = $stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -19,11 +19,31 @@ $result = mysqli_query($conn, $query);
 </head>
 <body>
 
-    <!-- Website structure -->
-    <!-- -Classes' only purpose is to use Bootstrap features. -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">Resume Builder</a>
+            <div class="ms-auto">
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <span class="navbar-text text-light me-3">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                    <a href="profile.php" class="btn btn-outline-light btn-sm me-2">My Profile</a>
+                    <a href="logout.php" class="btn btn-outline-danger btn-sm">Logout</a>
+                <?php else: ?>
+                    <a href="login.php" class="btn btn-outline-light btn-sm me-2">Login</a>
+                    <a href="register.php" class="btn btn-light btn-sm">Register</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-5">
-        <h1 class="mb-4">Resume Builder</h1>
-        <a href="create.php" class="btn btn-primary mb-3">Add New Resume</a>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Resume List</h1>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="create.php" class="btn btn-primary">+ Add New Resume</a>
+            <?php else: ?>
+                <a href="login.php" class="btn btn-primary">Login to Add Resume</a>
+            <?php endif; ?>
+        </div>
 
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
@@ -32,22 +52,30 @@ $result = mysqli_query($conn, $query);
                     <th>Position</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Actions</th>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <th>Actions</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
             <tbody>
-                <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                <?php foreach ($resumes as $row): ?>
                 <tr>
-                    <td><?php echo $row['first_name'] . " " . $row['last_name']; ?></td>
-                    <td><?php echo $row['current_position']; ?></td>
-                    <td><?php echo $row['email']; ?></td>
-                    <td><?php echo $row['phone']; ?></td>
-                    <td>
-                        <a href="update.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                    </td>
+                    <td><?php echo htmlspecialchars($row['first_name'] . " " . $row['last_name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['current_position']); ?></td>
+                    <td><?php echo htmlspecialchars($row['email']); ?></td>
+                    <td><?php echo htmlspecialchars($row['phone']); ?></td>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <td>
+                            <a href="update.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="delete.php?id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this resume?')">Delete</a>
+                        </td>
+                    <?php endif; ?>
                 </tr>
-                <?php } ?>
+                <?php endforeach; ?>
+                <?php if (empty($resumes)): ?>
+                    <tr><td colspan="5" class="text-center text-muted">No resumes found.</td></tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

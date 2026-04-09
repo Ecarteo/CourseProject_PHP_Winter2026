@@ -1,22 +1,35 @@
 <?php
-// Connect to the database
+session_start();
 include "db.php";
 
-// Check if ID was provided in the URL
+// Only logged-in users can delete resumes
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 if (isset($_GET['id']) && !empty($_GET['id'])) {
-    
-    $id = $_GET['id'];
 
-    // Delete the resume from the database
-    $query = "DELETE FROM resumes WHERE id = $id";
+    $id = (int)$_GET['id'];
 
-    if (mysqli_query($conn, $query)) {
-        // Redirect back to index after deletion
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "Something went wrong. Please try again.";
+    // Fetch the resume file name before deleting
+    $stmt = $pdo->prepare("SELECT resume_file FROM resumes WHERE id = :id");
+    $stmt->execute([':id' => $id]);
+    $row = $stmt->fetch();
+
+    if ($row) {
+        // Delete the uploaded file from the server if it exists
+        if ($row['resume_file'] && file_exists('uploads/' . $row['resume_file'])) {
+            unlink('uploads/' . $row['resume_file']);
+        }
+
+        // Delete the resume record using a prepared statement
+        $stmt = $pdo->prepare("DELETE FROM resumes WHERE id = :id");
+        $stmt->execute([':id' => $id]);
     }
+
+    header("Location: index.php");
+    exit();
 
 } else {
     echo "No resume ID provided.";
