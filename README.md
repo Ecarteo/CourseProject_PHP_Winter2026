@@ -36,13 +36,6 @@ A full-stack web application built in PHP for creating, managing, and storing di
 - Implemented file upload validation (MIME type and size checks)
 - Integrated Google reCAPTCHA across all forms
 
-## Planned Improvements
+## Notes (IMPORTANT)
 
-- Automated email notifications for account registration and resume updates
-- Drag-and-drop file upload functionality
-- Search and filter functionality on the main dashboard for sorting entries by skill or job title
-- Enhanced visual design with custom styling and more polished UI transitions
-
-## Notes
-
-This project was built and tested with a live server during Phase One; it is not currently deployed, so this repository is intended to be run locally. Setup requires a PHP environment with MySQL and a `.env` or config file for database credentials and reCAPTCHA keys (not included in this repo for security reasons).
+This project was originally built to be hosted on a live server. I have added a recreation of the PHP interface accessible on GitHub Pages. Although the original project is not functional here, you can still explore the files through the repository.

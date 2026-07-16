@@ -1,9 +1,9 @@
 <?php
 // Database connection settings
-$host     = "sql213.infinityfree.com";
-$dbname   = "if0_41192534_resume_builder";
-$user     = "if0_41192534";
-$password = "0w9Lye6zrpSdf2w";
+$host     = "";
+$dbname   = "";
+$user     = "";
+$password = "";
 
 try {
     // Create PDO connection

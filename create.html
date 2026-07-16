@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder - Create</title>
+    <link rel="icon" type="image/x-icon" href="course-project/img/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Resume Builder</a>
+            <div class="ms-auto">
+                <span class="navbar-text text-light me-3">Welcome, mcalderon</span>
+                <a href="#" class="btn btn-outline-light btn-sm me-2">My Profile</a>
+                <a href="#" class="btn btn-outline-danger btn-sm">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <h1 class="mb-4">Create Resume</h1>
+        <a href="index.html" class="btn btn-secondary mb-3">Back to List</a>
+
+        <form>
+            <div class="mb-3">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" maxlength="50" value="Matthew">
+            </div>
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" maxlength="50" value="Calderon">
+            </div>
+            <div class="mb-3">
+                <label for="current_position" class="form-label">Current Position</label>
+                <input type="text" class="form-control" id="current_position" name="current_position" maxlength="100" value="Backend Developer (Java / C#)">
+            </div>
+            <div class="mb-3">
+                <label for="skills" class="form-label">Skills (separate with commas)</label>
+                <input type="text" class="form-control" id="skills" name="skills" value="Java, C#/.NET, PHP, JavaScript, MySQL, Git">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" value="matthew.calderon@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="phone" name="phone" minlength="10" maxlength="15" value="7055550187">
+            </div>
+            <div class="mb-3">
+                <label for="bio" class="form-label">Short Bio</label>
+                <textarea class="form-control" id="bio" name="bio" rows="4" minlength="10">Computer Programming and Analysis student at Georgian College, focused on backend development with Java and C#/.NET. Currently seeking a co-op placement to apply skills in database design and web application development.</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="resume_file" class="form-label">Upload Resume / CV <span class="text-muted">(PDF, JPG, PNG — max 5MB, optional)</span></label>
+                <input type="file" class="form-control" id="resume_file" name="resume_file" accept=".pdf,.jpg,.jpeg,.png,.gif">
+            </div>
+
+            <div class="mb-3">
+                <div style="width: 304px; height: 78px; border: 1px solid #d3d3d3; border-radius: 3px; display: flex; align-items: center; padding: 0 16px; background: #f9f9f9;">
+                    <div style="width: 28px; height: 28px; border: 2px solid #c1c1c1; border-radius: 3px; margin-right: 12px;"></div>
+                    <span style="font-family: Roboto, Arial, sans-serif; font-size: 14px; color: #000;">I'm not a robot</span>
+                    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" style="width:32px;height:32px;margin-left:auto;" alt="">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save Resume</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+</body>
+</html>
